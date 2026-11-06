@@ -1,0 +1,123 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Header } from "@/sections/Header";
+import { CTASection } from "@/sections/Footer/components/CTASection";
+import { Footer } from "@/sections/Footer";
+import { locations } from "@/data/locations";
+import { TrackedTelLink } from "@/components/TrackedTelLink";
+import { categories } from "@/data/categories";
+import { absoluteUrl, brandName, business, citiesLabel } from "@/data/business";
+
+const canonical = absoluteUrl("/about");
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "@id": `${canonical}#webpage`,
+  url: canonical,
+  name: `About Us | ${brandName()}`,
+  description: `About ${brandName()}: specialist solar panel cleaning and bird proofing for homes and businesses across ${business.region}.`,
+  isPartOf: { "@id": `${business.siteUrl}/#website` },
+  about: { "@id": `${business.siteUrl}/#business` },
+  inLanguage: "en-GB",
+};
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+    { "@type": "ListItem", position: 2, name: "About", item: canonical },
+  ],
+};
+---
+
+<BaseLayout
+  title={`About Us | ${brandName()}`}
+  description={`About ${brandName()}: specialist solar panel cleaning, bird proofing and solar panel checks across ${business.region}. Pure water only. Free quotes.`}
+  canonical={canonical}
+>
+  <div class="text-neutral-600 text-lg not-italic normal-nums font-medium accent-auto bg-[#323232] box-border caret-transparent block tracking-[normal] leading-[27px] list-outside list-disc min-h-full pointer-events-auto text-start indent-[0px] normal-case visible border-separate font-manrope">
+    <Header client:load />
+    <main>
+      <section class="box-border caret-transparent pt-[160px] pb-[70px] md:pt-[220px] md:pb-[100px]">
+        <div class="box-border caret-transparent max-w-[980px] mx-auto px-5 md:px-8 text-center">
+          <p class="text-[#16a34a] text-sm font-semibold uppercase tracking-[0.18em] mb-4">About Us</p>
+          <h1 class="text-white text-[34px] font-bold leading-[44px] mb-5 md:text-[64px] md:leading-[78px]">
+            About {brandName()}
+          </h1>
+          <p class="text-slate-200 max-w-[720px] mx-auto mb-8">Solar panel cleaning specialists serving {citiesLabel()} and {business.region}.</p>
+          <TrackedTelLink
+            client:load
+            showPhoneNumber
+            prefix="Call "
+            className="text-white text-base bg-[#15803d] font-bold border border-[#15803d] px-8 py-4 rounded-[50px] hover:bg-[#16a34a] transition-colors inline-flex"
+            trackingLocation="about"
+          />
+        </div>
+      </section>
+
+      <section class="box-border caret-transparent pb-[60px]">
+        <div class="box-border caret-transparent max-w-[980px] mx-auto px-5 md:px-8">
+          <div class="bg-white rounded-[20px] p-6 md:p-10 space-y-10">
+            <div>
+              <h2 class="text-gray-900 text-2xl font-bold mb-4 md:text-3xl">Solar Panel Cleaning Is All We Do</h2>
+              <p class="text-gray-700 leading-7 mb-4">{brandName()} is a dedicated solar panel cleaning service for {citiesLabel()} and {business.region}. Rather than offering solar cleaning as an add-on to window cleaning or roofing, we focus on keeping solar panels clean, protected and producing as much electricity as they should.</p>
+              <p class="text-gray-700 leading-7">We clean domestic, commercial and ground-mounted arrays with purified water and soft brushes, stop pigeons nesting under panels with no-drill mesh, and carry out visual solar panel checks when output drops. Every job comes with before and after photos and plain-English advice.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+              <div class="w-full md:w-64 rounded-xl bg-gray-200 shrink-0 overflow-hidden">
+                <img src={business.assets.about} alt={`Solar panel cleaner with a water-fed pole in ${citiesLabel()}`} width="512" height="512" class="w-full h-full object-cover" loading="lazy" />
+              </div>
+              <div>
+                <h2 class="text-gray-900 text-2xl font-bold mb-4 md:text-3xl">How We Work</h2>
+                <ul class="text-gray-700 space-y-2 list-disc pl-5">
+                  <li>Pure water and soft brushes only — no detergents or pressure washers</li>
+                  <li>Panels cleaned from the ground with carbon-fibre water-fed poles wherever access allows</li>
+                  <li>Bird proofing fitted with clips, never drilled into panels or roofs</li>
+                  <li>Fixed prices agreed before we start, with photos sent after every visit</li>
+                  <li>RAMS supplied for commercial and public sector sites</li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-gray-900 text-2xl font-bold mb-4 md:text-3xl">Proudly Serving {citiesLabel()} and Surrounding Areas</h2>
+              <p class="text-gray-700 leading-7 mb-4">{brandName()} cleans and bird proofs solar panels across {business.region}. <a href="/locations" class="text-[#16a34a] hover:underline font-medium">View all service areas</a>.</p>
+              <div class="grid grid-cols-2 gap-2 md:grid-cols-3">
+                {locations.map((location) => (
+                  <a href={`/locations/${location.slug}`} class="text-[#16a34a] hover:underline text-sm">{location.name}</a>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-gray-900 text-2xl font-bold mb-4 md:text-3xl">Why Customers Choose Us</h2>
+              <ul class="text-gray-700 space-y-2 list-disc pl-5">
+                <li>Free, fixed-price quotes — usually from a postcode and a photo</li>
+                <li>Specialist pure water equipment built for solar panels</li>
+                <li>Domestic, commercial and farm arrays across {citiesLabel()} and {business.region}</li>
+                <li>Maintenance plans with no long tie-in</li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 class="text-gray-900 text-2xl font-bold mb-4 md:text-3xl">Our Services</h2>
+              <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {categories.map((category) => (
+                  <a href={`/${category.slug}`} class="text-[#16a34a] hover:underline">{category.title}</a>
+                ))}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      <CTASection client:load />
+    </main>
+    <Footer client:load />
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</BaseLayout>
