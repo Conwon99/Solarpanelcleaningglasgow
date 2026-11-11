@@ -11,7 +11,7 @@ export const business = {
   trackingPhone: null as string | null,
   trackingPhoneLocal: null as string | null,
   email: "hello@solarpanelcleaningglasgow.co.uk",
-  siteUrl: "https://www.solarpanelcleaningglasgow.co.uk",
+  siteUrl: "https://solarpanelcleaningglasgow.co.uk",
   facebookUrl: "",
   googleMapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Solar+Panel+Cleaning+Glasgow",

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://www.solarpanelcleaningglasgow.co.uk/sitemap.xml
+Sitemap: https://solarpanelcleaningglasgow.co.uk/sitemap.xml
 
 # Disallow private/non-public endpoints only. Keep Astro assets crawlable so search engines can render pages.
 Disallow: /api/
