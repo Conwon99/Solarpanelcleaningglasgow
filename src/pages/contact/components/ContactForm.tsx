@@ -3,14 +3,14 @@ import { trackFormStart } from "@/utils/analytics";
 import { getFormServiceOptions } from "@/data/categories";
 import { business } from "@/data/business";
 
-// TODO: replace with this site's own Formspree form ID before launch
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/REPLACE_WITH_FORM_ID";
+// Leads are captured by Netlify Forms (form name "contact").
+const FORM_NAME = "contact";
 
 export const ContactForm = () => {
   const serviceOptions = getFormServiceOptions();
 
   useEffect(() => {
-    const form = document.querySelector('form[name="wf-form-Contact-Form"]') as HTMLFormElement;
+    const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
     const successMessage = document.querySelector('[aria-label="Contact Form success"]') as HTMLElement;
     const errorMessage = document.querySelector('[aria-label="Contact Form failure"]') as HTMLElement;
 
@@ -43,12 +43,10 @@ export const ContactForm = () => {
         formData.append("websiteUrl", business.siteUrl.replace("https://", "").replace("http://", ""));
 
         try {
-          const response = await fetch(FORMSPREE_ENDPOINT, {
+          const response = await fetch("/", {
             method: "POST",
-            body: formData,
-            headers: {
-              Accept: "application/json",
-            },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData as unknown as Record<string, string>).toString(),
           });
 
           if (response.ok) {
@@ -72,12 +70,20 @@ export const ContactForm = () => {
 
   return (
     <form
-      name="wf-form-Contact-Form"
+      name={FORM_NAME}
       aria-label="Contact Form"
-      action={FORMSPREE_ENDPOINT}
+      action="/contact?sent=1"
       method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
       className="box-border caret-transparent"
     >
+      <input type="hidden" name="form-name" value={FORM_NAME} />
+      <p className="hidden">
+        <label>
+          Leave this empty: <input name="bot-field" />
+        </label>
+      </p>
       <div className="text-base items-start box-border caret-transparent flex-col w-full mb-5 md:text-lg md:items-center md:flex-row">
         <label className="text-white text-base font-semibold box-border caret-transparent block mb-[5px] md:text-lg">
           Name
@@ -109,7 +115,7 @@ export const ContactForm = () => {
           </label>
           <input
             name="phone"
-            placeholder="07894 663151"
+            placeholder="07123 456789"
             type="tel"
             required
             className="text-gray-900 text-base bg-white box-border caret-transparent block h-12 leading-[25.6px] align-middle w-full border-2 border-white mb-2.5 px-5 py-2.5 rounded-[20px] border-solid focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
